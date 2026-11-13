@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Programming Final Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="console">
+        <div id="top-screen">
+            <div id="player-column" class="screen-slice">
+                <p>BOB</p>
+                <div class="health-bar">
+                    <div id="player-hp"class="health-fill"></div>
+                </div>
+                <span id="player-hp-num">100/100</span>
+            </div>
+
+            <div id="battle" class="screen-slice">
+                <p><span id="battle-text">Battle, what Battle?</span></p>
+            </div>
+
+            <div id="enemy-column" class="screen-slice">
+                Enemy will appear soon...
+            </div>
+        </div>    
+        <div id="bottom-screen">
+            <div>Bottom Interface and cards.</div>
+            <div>Testing:</div>
+            <div id="keypad" style="text-align: center; background: #222; padding: 15px; border-radius: 8-x; width: 260px;">
+                <input type="password" id="numericInput" readonly maxlength="2" style="width: 50%; height: 20px;">
+                <div class="grid-keypad" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                    <button class="num-btn" data-val="1">1</button>
+                    <button class="num-btn" data-val="2">2</button>
+                    <button class="num-btn" data-val="3">3</button>
+                    <button class="num-btn" data-val="4">4</button>
+                    <button class="num-btn" data-val="5">5</button>
+                    <button class="num-btn" data-val="6">6</button>
+                    <button class="num-btn" data-val="7">7</button>
+                    <button class="num-btn" data-val="8">8</button>
+                    <button class="num-btn" data-val="9">9</button>
+                    <button class="num-btn" data-val="0">0</button>
+                    <button class="num-btn" data-val="SUBMIT">Enter</button>
+                    <button class="num-btn" data-val="CLEAR">Clear</button>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", () =>{
+            const inputField = document.getElementById("numericInput");
+            const battleview = document.getElementById("battle-text");
+            const keyButtons = document.querySelectorAll(".num-btn");
+            keyButtons.forEach(button =>{
+                button.addEventListener("click", ()=> {
+                    const value = button.getAttribute("data-val");
+                    if (value === "SUBMIT"){
+                        if (inputField.value.length > 0){
+                            battleview.textContent = "Casted Damage: " + inputField.value;
+                        }
+                    } else if (value === "CLEAR"){
+                        inputField.value = "";
+                        battleview.textContent = "Battle, what battle?";
+                    } else{
+                        if (inputField.value.length < 3){
+                            inputField.value += value;
+                            battleview.textContent = "Charging Damage: " +inputField.value;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
