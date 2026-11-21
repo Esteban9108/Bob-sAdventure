@@ -21,14 +21,15 @@
             </div>
 
             <div id="enemy-column" class="screen-slice">
-                Enemy will appear soon...
+                <p><span>The Enemy</span></p>
+                <p><span id="enemy-hp">1000/1000</span></p>
+                <p><span id="enemy-item">Suspicous Stew</span></p>
             </div>
         </div>    
         <div id="bottom-screen">
             <div>Bottom Interface and cards.</div>
             <div>Testing:</div>
             <div id="keypad" style="text-align: center; background: #222; padding: 15px; border-radius: 8-x; width: 260px;">
-                <input type="password" id="numericInput" readonly maxlength="2" style="width: 50%; height: 20px;">
                 <div class="grid-keypad" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
                     <button class="num-btn" data-val="1">1</button>
                     <button class="num-btn" data-val="2">2</button>
@@ -48,16 +49,29 @@
         
     </main>
     <script>
+
+        let enemyHp= 1000;
+        const enemy_maxHp = 1000;
+
+
+
         document.addEventListener("DOMContentLoaded", () =>{
             const inputField = document.getElementById("numericInput");
             const battleview = document.getElementById("battle-text");
             const keyButtons = document.querySelectorAll(".num-btn");
+            const enemyHpText = document.getElementById("enemy-hp");
             keyButtons.forEach(button =>{
                 button.addEventListener("click", ()=> {
                     const value = button.getAttribute("data-val");
                     if (value === "SUBMIT"){
                         if (inputField.value.length > 0){
+                            const dmg = Number(inputField.value);
+                            enemyHp = enemyHp - dmg;
+                            if (enemyHp < 0) enemyHp = 0;
+
                             battleview.textContent = "Casted Damage: " + inputField.value;
+                            enemyHpText.textContent = enemyHp + "/" + enemy_maxHp;
+                            inputField.value = "";
                         }
                     } else if (value === "CLEAR"){
                         inputField.value = "";
